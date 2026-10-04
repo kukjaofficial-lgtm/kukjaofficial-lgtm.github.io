@@ -1,7 +1,7 @@
 ---
 title: KUKJA 소개
 ---
-KUKJA(Korea University Korea-Japan Alliance)는 고려대학교에서 활동하는 한국인·일본인 학생들의 토론 동아리입니다.
+KUKJA(Korea University Korea-Japan Alliance)는 고려대학교에서 활동하는 한국인·일본인 학생들의 토론 및 교류를 위한 소모임입니다.
 
 ## 우리가 모이는 이유
 
