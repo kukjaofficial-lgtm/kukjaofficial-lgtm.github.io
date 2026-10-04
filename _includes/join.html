@@ -3,7 +3,7 @@
 {%- assign s = site.data.settings[lang] -%}
 <section class="join">
   <div class="wrap join-inner">
-    <h2>{{ t.join_title }}</h2>
+    <h2>{{ s.join_title | default: t.join_title }}</h2>
     <div>
       <p>{{ s.join_text }}</p>
       {%- assign has_email = false -%}{%- if site.data.settings.email and site.data.settings.email != "" -%}{%- assign has_email = true -%}{%- endif -%}

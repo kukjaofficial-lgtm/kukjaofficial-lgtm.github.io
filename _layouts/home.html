@@ -4,42 +4,77 @@ layout: base
 {%- assign lang = page.lang -%}
 {%- assign t = site.data.i18n[lang] -%}
 {%- assign s = site.data.settings[lang] -%}
+{%- assign imgs = site.data.settings.slides -%}
 {%- if lang == "ja" -%}
-  {%- assign other = site.data.settings.ko -%}{%- assign other_lang = "ko" -%}
+  {%- assign other = site.data.settings.ko -%}{%- assign other_lang = "ko" -%}{%- assign echo_gap = " " -%}
   {%- assign posts = site.discussions_ja | sort: "date" | reverse -%}
   {%- assign home = "/ja/" -%}
 {%- else -%}
-  {%- assign other = site.data.settings.ja -%}{%- assign other_lang = "ja" -%}
+  {%- assign other = site.data.settings.ja -%}{%- assign other_lang = "ja" -%}{%- assign echo_gap = "" -%}
   {%- assign posts = site.discussions_ko | sort: "date" | reverse -%}
   {%- assign home = "/" -%}
 {%- endif -%}
+{%- assign slide_imgs = "" | split: "" | push: imgs.main | push: imgs.past | push: imgs.present | push: imgs.future -%}
 
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div class="hero-text">
-      <p class="kicker">{{ s.kicker }}</p>
-      <h1 class="slogan">
-        <span>{{ s.slogan_line1 }}</span>
-        <span>{{ s.slogan_line2 }}</span>
-      </h1>
-      <p class="slogan-echo" lang="{{ other_lang }}">{{ other.slogan_line1 }}{{ other.slogan_line2 }}</p>
-      <p class="hero-intro">{{ s.intro }}</p>
+<section class="slideshow" aria-roledescription="carousel" aria-label="KUKJA">
+  <div class="slides" id="slides">
+    {%- comment -%} Slide 1: the slogan {%- endcomment -%}
+    <div class="slide slide-intro is-active" role="group" aria-roledescription="slide" aria-label="1 / 4">
+      <div class="slide-media{% if slide_imgs[0] == nil or slide_imgs[0] == '' %} no-photo{% endif %}">
+        {%- if slide_imgs[0] and slide_imgs[0] != "" %}<img src="{{ slide_imgs[0] | relative_url }}" alt="">{% endif %}
+      </div>
+      <div class="slide-content">
+        <div class="wrap">
+          <div class="slide-text">
+            <p class="kicker">{{ s.kicker }}</p>
+            <h1 class="slogan">
+              <span>{{ s.slogan_line1 }}</span>
+              <span>{{ s.slogan_line2 }}</span>
+            </h1>
+            <p class="slogan-echo" lang="{{ other_lang }}">{{ other.slogan_line1 }}{{ echo_gap }}{{ other.slogan_line2 }}</p>
+            <p class="hero-intro">{{ s.intro }}</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="hero-panel" aria-hidden="true">
-      <span class="panel-word">KUKJA</span>
-      <span class="panel-pair"><span lang="ko">한일</span><span lang="ja">日韓</span></span>
+    {%- comment -%} Slides 2-4: past, present, future {%- endcomment -%}
+    {%- for theme in s.themes limit: 3 %}
+    {%- assign img = slide_imgs[forloop.index] %}
+    <div class="slide slide-theme" role="group" aria-roledescription="slide" aria-label="{{ forloop.index | plus: 1 }} / 4">
+      <div class="slide-media{% if img == nil or img == '' %} no-photo{% endif %}">
+        {%- if img and img != "" %}<img src="{{ img | relative_url }}" alt="" loading="lazy">{% endif %}
+      </div>
+      <div class="slide-content">
+        <div class="wrap">
+          <div class="slide-text">
+            <p class="kicker">{{ t.themes_title }}</p>
+            <h2 class="theme-word">{{ theme.word }}</h2>
+            <p class="theme-title">{{ theme.title }}</p>
+            <p class="theme-text">{{ theme.text }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {%- endfor %}
+  </div>
+
+  <div class="slide-mark" aria-hidden="true">
+    <span class="panel-word">KUKJA</span>
+    <span class="panel-pair"><span lang="ko">한일</span><span lang="ja">日韓</span></span>
+  </div>
+
+  <div class="slide-controls">
+    <div class="wrap slide-controls-inner">
+      <div class="slide-tabs">
+        <button type="button" data-slide="0" aria-controls="slides" aria-current="true"><span>KUKJA</span><i></i></button>
+        {%- for theme in s.themes limit: 3 %}
+        <button type="button" data-slide="{{ forloop.index }}" aria-controls="slides"><span>{{ theme.word }}</span><i></i></button>
+        {%- endfor %}
+      </div>
+      <button type="button" class="slide-pause" aria-pressed="false" data-pause="{{ t.pause }}" data-play="{{ t.play }}">{{ t.pause }}</button>
     </div>
   </div>
 </section>
-
-{%- if site.data.settings.hero_image and site.data.settings.hero_image != "" %}
-<figure class="hero-photo">
-  <div class="wrap">
-    <img src="{{ site.data.settings.hero_image | relative_url }}" alt="{{ s.hero_caption | default: '' }}">
-    {%- if s.hero_caption and s.hero_caption != "" %}<figcaption>{{ s.hero_caption }}</figcaption>{% endif %}
-  </div>
-</figure>
-{%- endif %}
 
 <section class="section">
   <div class="wrap news-grid">
@@ -73,21 +108,6 @@ layout: base
         <div><dt>{{ t.topic }}</dt><dd>{{ s.next_topic }}</dd></div>
       </dl>
     </aside>
-  </div>
-</section>
-
-<section class="section themes-section">
-  <div class="wrap">
-    <h2 class="themes-title">{{ t.themes_title }}</h2>
-    <ol class="themes">
-      {%- for theme in s.themes %}
-      <li class="theme">
-        <span class="theme-word">{{ theme.word }}</span>
-        <h3>{{ theme.title }}</h3>
-        <p>{{ theme.text }}</p>
-      </li>
-      {%- endfor %}
-    </ol>
   </div>
 </section>
 

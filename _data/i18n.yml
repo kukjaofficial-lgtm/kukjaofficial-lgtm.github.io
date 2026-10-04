@@ -26,6 +26,8 @@ ko:
   contact: 이메일 보내기
   instagram: 인스타그램
   switch_label: 언어 선택
+  pause: 일시정지
+  play: 재생
 ja:
   html_lang: ja
   club_desc: 高麗大学 日韓学生討論サークル
@@ -49,7 +51,9 @@ ja:
   newer: 次の回
   older: 前の回
   other_version: この回を韓国語で読む
-  join_title: 一緒に語りましょう
+  join_title: さぁ、ご一緒に。
   contact: メールを送る
   instagram: インスタグラム
   switch_label: 言語の選択
+  pause: 一時停止
+  play: 再生
