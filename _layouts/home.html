@@ -32,6 +32,15 @@ layout: base
   </div>
 </section>
 
+{%- if site.data.settings.hero_image and site.data.settings.hero_image != "" %}
+<figure class="hero-photo">
+  <div class="wrap">
+    <img src="{{ site.data.settings.hero_image | relative_url }}" alt="{{ s.hero_caption | default: '' }}">
+    {%- if s.hero_caption and s.hero_caption != "" %}<figcaption>{{ s.hero_caption }}</figcaption>{% endif %}
+  </div>
+</figure>
+{%- endif %}
+
 <section class="section">
   <div class="wrap news-grid">
     <div class="news">
