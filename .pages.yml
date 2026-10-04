@@ -58,6 +58,44 @@ content:
       - { name: image, label: 代表写真（任意）, type: image }
       - { name: body, label: 本文, type: rich-text, options: { format: markdown } }
 
+  - name: notices_ko
+    label: 공지 (한국어)
+    type: collection
+    path: _notices_ko
+    filename: "notice-{year}{month}{day}-{hour}{minute}{second}.md"
+    view:
+      fields: [title, category, date]
+      primary: title
+      sort: [date]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - { name: title, label: 제목, type: string, required: true }
+      - { name: date, label: 날짜, type: date, required: true }
+      - { name: category, label: "분류 (자유롭게 입력, 예: 모집 / 일정 / 행사)", type: string }
+      - { name: pinned, label: 목록 맨 위에 고정, type: boolean }
+      - { name: body, label: 본문, type: rich-text, options: { format: markdown } }
+
+  - name: notices_ja
+    label: お知らせ (日本語)
+    type: collection
+    path: _notices_ja
+    filename: "notice-{year}{month}{day}-{hour}{minute}{second}.md"
+    view:
+      fields: [title, category, date]
+      primary: title
+      sort: [date]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - { name: title, label: タイトル, type: string, required: true }
+      - { name: date, label: 日付, type: date, required: true }
+      - { name: category, label: "分類（自由入力。例: 募集 / 日程 / イベント）", type: string }
+      - { name: pinned, label: 一覧の一番上に固定, type: boolean }
+      - { name: body, label: 本文, type: rich-text, options: { format: markdown } }
+
   - name: settings
     label: 홈페이지 설정 / ホームページ設定
     type: file
@@ -65,6 +103,14 @@ content:
     fields:
       - { name: email, label: "Club email (shown in contact buttons)", type: string }
       - { name: instagram, label: "Instagram link (full URL)", type: string }
+      - name: slides
+        label: "메인 슬라이드 사진 / トップスライド写真 (16:9, e.g. 1920x1080, under 1 MB each)"
+        type: object
+        fields:
+          - { name: main, label: "1. 슬로건 / スローガン", type: image }
+          - { name: past, label: "2. 과거 / 過去", type: image }
+          - { name: present, label: "3. 현재 / 現在", type: image }
+          - { name: future, label: "4. 미래 / 未来", type: image }
       - name: ko
         label: 한국어
         type: object
@@ -77,13 +123,14 @@ content:
           - { name: next_place, label: 다음 모임 장소, type: string }
           - { name: next_topic, label: 다음 모임 주제, type: string }
           - name: themes
-            label: 우리가 묻는 것 (3개)
+            label: "슬라이드 2~4: 과거 / 현재 / 미래"
             type: object
             list: true
             fields:
               - { name: word, label: 큰 글자, type: string }
               - { name: title, label: 제목, type: string }
               - { name: text, label: 설명, type: text }
+          - { name: join_title, label: 참여 안내 제목, type: string }
           - { name: join_text, label: 참여 안내 문구, type: text }
       - name: ja
         label: 日本語
@@ -97,13 +144,14 @@ content:
           - { name: next_place, label: 次回の場所, type: string }
           - { name: next_topic, label: 次回のテーマ, type: string }
           - name: themes
-            label: 私たちが問うこと（3つ）
+            label: "スライド2〜4: 過去 / 現在 / 未来"
             type: object
             list: true
             fields:
               - { name: word, label: 大きな文字, type: string }
               - { name: title, label: タイトル, type: string }
               - { name: text, label: 説明, type: text }
+          - { name: join_title, label: 参加案内のタイトル, type: string }
           - { name: join_text, label: 参加案内, type: text }
 
   - name: about_ko
