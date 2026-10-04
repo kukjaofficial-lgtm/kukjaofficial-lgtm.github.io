@@ -1,0 +1,25 @@
+---
+layout: base
+---
+{%- assign lang = page.lang -%}
+{%- assign t = site.data.i18n[lang] -%}
+{%- if lang == "ja" -%}{%- assign list_url = "/ja/notices/" -%}{%- else -%}{%- assign list_url = "/notices/" -%}{%- endif -%}
+<article>
+  <header class="post-head">
+    <div class="wrap post-head-inner">
+      <p class="post-week">{{ t.notices_title }}</p>
+      <h1>{{ page.title }}</h1>
+      <p class="post-meta">
+        <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%Y.%m.%d" }}</time>
+        {%- if page.pinned %}<span class="tag tag-light">{{ t.pinned }}</span>{% endif %}
+        {%- if page.category and page.category != "" %}<span class="tag tag-light">{{ page.category }}</span>{% endif %}
+      </p>
+    </div>
+  </header>
+  <div class="wrap post-wrap">
+    <div class="prose">
+      {{ content }}
+    </div>
+    <p class="back"><a class="text-link" href="{{ list_url | relative_url }}">{{ t.back_notices }}</a></p>
+  </div>
+</article>

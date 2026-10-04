@@ -1,0 +1,110 @@
+---
+layout: base
+---
+{%- assign lang = page.lang -%}
+{%- assign t = site.data.i18n[lang] -%}
+{%- assign s = site.data.settings[lang] -%}
+{%- assign imgs = site.data.settings.slides -%}
+{%- if lang == "ja" -%}
+  {%- assign other = site.data.settings.ko -%}{%- assign other_lang = "ko" -%}{%- assign echo_gap = " " -%}
+  {%- assign posts = site.discussions_ja | sort: "date" | reverse -%}
+  {%- assign home = "/ja/" -%}
+{%- else -%}
+  {%- assign other = site.data.settings.ja -%}{%- assign other_lang = "ja" -%}{%- assign echo_gap = "" -%}
+  {%- assign posts = site.discussions_ko | sort: "date" | reverse -%}
+  {%- assign home = "/" -%}
+{%- endif -%}
+{%- assign slide_imgs = "" | split: "" | push: imgs.main | push: imgs.past | push: imgs.present | push: imgs.future -%}
+
+<section class="slideshow" aria-roledescription="carousel" aria-label="KUKJA">
+  <div class="slides" id="slides">
+    {%- comment -%} Slide 1: the slogan {%- endcomment -%}
+    <div class="slide slide-intro is-active" role="group" aria-roledescription="slide" aria-label="1 / 4">
+      <div class="slide-media{% if slide_imgs[0] == nil or slide_imgs[0] == '' %} no-photo{% endif %}">
+        {%- if slide_imgs[0] and slide_imgs[0] != "" %}<img src="{{ slide_imgs[0] | relative_url }}" alt="">{% endif %}
+      </div>
+      <div class="slide-content">
+        <div class="wrap">
+          <div class="slide-text">
+            <p class="kicker">{{ s.kicker }}</p>
+            <h1 class="slogan">
+              <span>{{ s.slogan_line1 }}</span>
+              <span>{{ s.slogan_line2 }}</span>
+            </h1>
+            <p class="slogan-echo" lang="{{ other_lang }}">{{ other.slogan_line1 }}{{ echo_gap }}{{ other.slogan_line2 }}</p>
+            <p class="hero-intro">{{ s.intro }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {%- comment -%} Slides 2-4: past, present, future {%- endcomment -%}
+    {%- for theme in s.themes limit: 3 %}
+    {%- assign img = slide_imgs[forloop.index] %}
+    <div class="slide slide-theme" role="group" aria-roledescription="slide" aria-label="{{ forloop.index | plus: 1 }} / 4">
+      <div class="slide-media{% if img == nil or img == '' %} no-photo{% endif %}">
+        {%- if img and img != "" %}<img src="{{ img | relative_url }}" alt="" loading="lazy">{% endif %}
+      </div>
+      <div class="slide-content">
+        <div class="wrap">
+          <div class="slide-text">
+            <p class="kicker">{{ t.themes_title }}</p>
+            <h2 class="theme-word">{{ theme.word }}</h2>
+            <p class="theme-title">{{ theme.title }}</p>
+            <p class="theme-text">{{ theme.text }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {%- endfor %}
+  </div>
+
+
+  <div class="slide-controls">
+    <div class="wrap slide-controls-inner">
+      <div class="slide-tabs">
+        <button type="button" data-slide="0" aria-controls="slides" aria-current="true"><span>KUKJA</span><i></i></button>
+        {%- for theme in s.themes limit: 3 %}
+        <button type="button" data-slide="{{ forloop.index }}" aria-controls="slides"><span>{{ theme.word }}</span><i></i></button>
+        {%- endfor %}
+      </div>
+      <button type="button" class="slide-pause" aria-pressed="false" data-pause="{{ t.pause }}" data-play="{{ t.play }}">{{ t.pause }}</button>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap news-grid">
+    <div class="news">
+      <div class="section-head">
+        <h2>{{ t.recent }}</h2>
+        <a class="text-link" href="{{ home | append: 'discussions/' | relative_url }}">{{ t.see_all }}</a>
+      </div>
+      {%- if posts.size > 0 %}
+      <ol class="news-list">
+        {%- for post in posts limit: 5 %}
+        <li>
+          <a href="{{ post.url | relative_url }}">
+            <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%Y.%m.%d" }}</time>
+            <span class="news-week">{{ t.week_before }}{{ post.week }}{{ t.week_after }}</span>
+            <span class="news-title">{{ post.title }}</span>
+          </a>
+        </li>
+        {%- endfor %}
+      </ol>
+      {%- else %}
+      <p class="empty">{{ t.empty }}</p>
+      {%- endif %}
+    </div>
+
+    <aside class="next" aria-labelledby="next-title">
+      <h2 id="next-title">{{ t.next_session }}</h2>
+      <dl>
+        <div><dt>{{ t.when }}</dt><dd>{{ s.next_date }}</dd></div>
+        <div><dt>{{ t.where }}</dt><dd>{{ s.next_place }}</dd></div>
+        <div><dt>{{ t.topic }}</dt><dd>{{ s.next_topic }}</dd></div>
+      </dl>
+    </aside>
+  </div>
+</section>
+
+{% include join.html %}

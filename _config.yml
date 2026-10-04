@@ -12,12 +12,22 @@ collections:
   discussions_ja:
     output: true
     permalink: /ja/discussions/:name/
+  notices_ko:
+    output: true
+    permalink: /notices/:name/
+  notices_ja:
+    output: true
+    permalink: /ja/notices/:name/
 
 defaults:
   - scope: { path: "", type: discussions_ko }
     values: { layout: discussion, lang: ko }
   - scope: { path: "", type: discussions_ja }
     values: { layout: discussion, lang: ja }
+  - scope: { path: "", type: notices_ko }
+    values: { layout: notice, lang: ko, alt: /ja/notices/ }
+  - scope: { path: "", type: notices_ja }
+    values: { layout: notice, lang: ja, alt: /notices/ }
 
   - scope: { path: "about" }
     values: { layout: about, lang: ko, section: about, alt: /ja/about/ }

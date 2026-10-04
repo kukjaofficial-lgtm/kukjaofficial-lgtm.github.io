@@ -1,0 +1,35 @@
+---
+layout: base
+---
+{%- assign lang = page.lang -%}
+{%- assign t = site.data.i18n[lang] -%}
+{%- if lang == "ja" -%}{%- assign all = site.notices_ja | sort: "date" | reverse -%}{%- else -%}{%- assign all = site.notices_ko | sort: "date" | reverse -%}{%- endif -%}
+{%- assign pinned = all | where: "pinned", true -%}
+{%- assign regular = all | where_exp: "n", "n.pinned != true" -%}
+{%- assign cats = all | map: "category" | compact | uniq | sort -%}
+<section class="page-head">
+  <div class="wrap">
+    <h1>{{ t.notices_title }}</h1>
+    <p>{{ t.notices_intro }}</p>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    {%- if all.size > 0 %}
+    {%- if cats.size > 0 %}
+    <div class="filters" hidden>
+      <button type="button" data-filter="" aria-pressed="true">{{ t.all }}</button>
+      {%- for c in cats %}{% if c != "" %}
+      <button type="button" data-filter="{{ c | escape }}" aria-pressed="false">{{ c }}</button>
+      {%- endif %}{% endfor %}
+    </div>
+    {%- endif %}
+    <ul class="notice-list">
+      {%- for n in pinned %}{% include notice-row.html n=n pinned=true %}{% endfor %}
+      {%- for n in regular %}{% include notice-row.html n=n pinned=false %}{% endfor %}
+    </ul>
+    {%- else %}
+    <p class="empty">{{ t.notices_empty }}</p>
+    {%- endif %}
+  </div>
+</section>

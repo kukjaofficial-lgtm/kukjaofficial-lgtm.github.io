@@ -1,0 +1,11 @@
+{%- assign n = include.n -%}{%- assign t = site.data.i18n[page.lang] -%}
+      <li data-category="{{ n.category | escape }}"{% if include.pinned %} class="is-pinned"{% endif %}>
+        <a href="{{ n.url | relative_url }}">
+          <time datetime="{{ n.date | date: '%Y-%m-%d' }}">{{ n.date | date: "%Y.%m.%d" }}</time>
+          <span class="notice-tags">
+            {%- if include.pinned %}<span class="tag tag-solid">{{ t.pinned }}</span>{% endif %}
+            {%- if n.category and n.category != "" %}<span class="tag">{{ n.category }}</span>{% endif %}
+          </span>
+          <span class="notice-title">{{ n.title }}</span>
+        </a>
+      </li>
