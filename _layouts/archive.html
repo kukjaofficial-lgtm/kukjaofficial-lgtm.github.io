@@ -1,0 +1,37 @@
+---
+layout: base
+---
+{%- assign lang = page.lang -%}
+{%- assign t = site.data.i18n[lang] -%}
+{%- if lang == "ja" -%}{%- assign posts = site.discussions_ja | sort: "date" | reverse -%}{%- else -%}{%- assign posts = site.discussions_ko | sort: "date" | reverse -%}{%- endif -%}
+<section class="page-head">
+  <div class="wrap">
+    <h1>{{ t.archive_title }}</h1>
+    <p>{{ t.archive_intro }}</p>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    {%- if posts.size > 0 %}
+    <ol class="archive">
+      {%- for post in posts %}
+      <li>
+        <a class="entry" href="{{ post.url | relative_url }}">
+          <span class="entry-week"><small>{{ t.week_before }}</small>{{ post.week }}<small>{{ t.week_after }}</small></span>
+          <span class="entry-body">
+            <span class="entry-meta">
+              <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%Y.%m.%d" }}</time>
+              {%- if post.category %}<span class="tag">{{ post.category }}</span>{% endif %}
+            </span>
+            <span class="entry-title">{{ post.title }}</span>
+            {%- if post.summary %}<span class="entry-summary">{{ post.summary }}</span>{% endif %}
+          </span>
+        </a>
+      </li>
+      {%- endfor %}
+    </ol>
+    {%- else %}
+    <p class="empty">{{ t.empty }}</p>
+    {%- endif %}
+  </div>
+</section>
