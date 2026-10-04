@@ -1,0 +1,29 @@
+# KUKJA website settings. You normally don't need to edit this file.
+title: KUKJA
+url: "https://kukjaofficial-lgtm.github.io"
+baseurl: ""
+timezone: Asia/Seoul
+markdown: kramdown
+
+collections:
+  discussions_ko:
+    output: true
+    permalink: /discussions/:name/
+  discussions_ja:
+    output: true
+    permalink: /ja/discussions/:name/
+
+defaults:
+  - scope: { path: "", type: discussions_ko }
+    values: { layout: discussion, lang: ko }
+  - scope: { path: "", type: discussions_ja }
+    values: { layout: discussion, lang: ja }
+
+  - scope: { path: "about" }
+    values: { layout: about, lang: ko, section: about, alt: /ja/about/ }
+  - scope: { path: "ja/about" }
+    values: { layout: about, lang: ja, section: about, alt: /about/ }
+
+exclude:
+  - README.md
+  - HOW-TO-POST.md

@@ -1,0 +1,123 @@
+# Settings for the Pages CMS editor (app.pagescms.org).
+media:
+  input: assets/uploads
+  output: /assets/uploads
+  rename: safe
+  categories: [image]
+
+content:
+  - name: discussions_ko
+    label: 토론 기록 (한국어)
+    type: collection
+    path: _discussions_ko
+    filename: "week-{week}.md"
+    view:
+      fields: [title, week, date]
+      primary: title
+      sort: [date, week]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - { name: title, label: 제목, type: string, required: true }
+      - { name: week, label: "회차 (숫자만, 예: 12)", type: number, required: true }
+      - { name: date, label: 모임 날짜, type: date, required: true }
+      - name: category
+        label: 분류
+        type: select
+        options:
+          values: [역사, 사회, 미래, 기타]
+      - { name: presenter, label: "발제자 (예: 발제 김민준)", type: string }
+      - { name: summary, label: 한두 문장 요약, type: text }
+      - { name: image, label: 대표 사진 (선택), type: image }
+      - { name: body, label: 본문, type: rich-text, options: { format: markdown } }
+
+  - name: discussions_ja
+    label: 討論の記録 (日本語)
+    type: collection
+    path: _discussions_ja
+    filename: "week-{week}.md"
+    view:
+      fields: [title, week, date]
+      primary: title
+      sort: [date, week]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - { name: title, label: タイトル, type: string, required: true }
+      - { name: week, label: "回（数字のみ。例: 12）", type: number, required: true }
+      - { name: date, label: 集まりの日付, type: date, required: true }
+      - name: category
+        label: 分類
+        type: select
+        options:
+          values: [歴史, 社会, 未来, その他]
+      - { name: presenter, label: "発題者（例: 発題 佐藤はるか）", type: string }
+      - { name: summary, label: 一、二文の要約, type: text }
+      - { name: image, label: 代表写真（任意）, type: image }
+      - { name: body, label: 本文, type: rich-text, options: { format: markdown } }
+
+  - name: settings
+    label: 홈페이지 설정 / ホームページ設定
+    type: file
+    path: _data/settings.yml
+    fields:
+      - { name: email, label: "Club email (shown in contact buttons)", type: string }
+      - { name: instagram, label: "Instagram link (full URL)", type: string }
+      - name: ko
+        label: 한국어
+        type: object
+        fields:
+          - { name: kicker, label: 슬로건 위 짧은 문구, type: string }
+          - { name: slogan_line1, label: 슬로건 첫 줄, type: string }
+          - { name: slogan_line2, label: 슬로건 둘째 줄, type: string }
+          - { name: intro, label: 소개 문단, type: text }
+          - { name: next_date, label: 다음 모임 일시, type: string }
+          - { name: next_place, label: 다음 모임 장소, type: string }
+          - { name: next_topic, label: 다음 모임 주제, type: string }
+          - name: themes
+            label: 우리가 묻는 것 (3개)
+            type: object
+            list: true
+            fields:
+              - { name: word, label: 큰 글자, type: string }
+              - { name: title, label: 제목, type: string }
+              - { name: text, label: 설명, type: text }
+          - { name: join_text, label: 참여 안내 문구, type: text }
+      - name: ja
+        label: 日本語
+        type: object
+        fields:
+          - { name: kicker, label: スローガン上の短い文, type: string }
+          - { name: slogan_line1, label: スローガン1行目, type: string }
+          - { name: slogan_line2, label: スローガン2行目, type: string }
+          - { name: intro, label: 紹介文, type: text }
+          - { name: next_date, label: 次回の日時, type: string }
+          - { name: next_place, label: 次回の場所, type: string }
+          - { name: next_topic, label: 次回のテーマ, type: string }
+          - name: themes
+            label: 私たちが問うこと（3つ）
+            type: object
+            list: true
+            fields:
+              - { name: word, label: 大きな文字, type: string }
+              - { name: title, label: タイトル, type: string }
+              - { name: text, label: 説明, type: text }
+          - { name: join_text, label: 参加案内, type: text }
+
+  - name: about_ko
+    label: 소개 페이지 (한국어)
+    type: file
+    path: about/index.md
+    fields:
+      - { name: title, label: 제목, type: string }
+      - { name: body, label: 본문, type: rich-text, options: { format: markdown } }
+
+  - name: about_ja
+    label: 紹介ページ (日本語)
+    type: file
+    path: ja/about/index.md
+    fields:
+      - { name: title, label: タイトル, type: string }
+      - { name: body, label: 本文, type: rich-text, options: { format: markdown } }
