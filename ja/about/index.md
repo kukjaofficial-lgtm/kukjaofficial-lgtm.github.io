@@ -1,7 +1,7 @@
 ---
 title: KUKJAについて
 ---
-KUKJA（Korea University Korea-Japan Alliance）は、高麗大学で活動する韓国人・日本人学生の討論サークルです。
+KUKJA（Korea University Korea-Japan Alliance）は、高麗大学で活動する韓国人・日本人学生の討論および交流のためのサークルです。
 
 ## 私たちが集まる理由
 
